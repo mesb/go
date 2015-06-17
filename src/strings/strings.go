@@ -146,17 +146,18 @@ func ContainsRune(s string, r rune) bool {
 // Index returns the index of the first instance of sep in s, or -1 if sep is not present in s.
 func Index(s, sep string) int {
 	n := len(sep)
+    m := len(s)
 	switch {
 	case n == 0:
 		return 0
 	case n == 1:
 		return IndexByte(s, sep[0])
-	case n == len(s):
+	case n == m:
 		if sep == s {
 			return 0
 		}
 		return -1
-	case n > len(s):
+	case n > m:
 		return -1
 	}
 	// Rabin-Karp search
@@ -168,7 +169,7 @@ func Index(s, sep string) int {
 	if h == hashsep && s[:n] == sep {
 		return 0
 	}
-	for i := n; i < len(s); {
+	for i := n; i < m; {
 		h *= primeRK
 		h += uint32(s[i])
 		h -= pow * uint32(s[i-n])
